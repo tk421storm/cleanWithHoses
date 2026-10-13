@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<EffecterDef>
+		<defName>HoseCleaningEffect</defName>
+		<children>
+			<li>
+				<subEffecterClass>SubEffecter_InteractSymbol</subEffecterClass>
+				<moteDef>Mote_HoseClean</moteDef>
+			</li>
+			<li>
+				<subEffecterClass>SubEffecter_SprayerChance</subEffecterClass>
+				<fleckDef>Mote_HoseSplashes</fleckDef>
+				<positionRadiusMin>0.0</positionRadiusMin>
+				<positionRadius>0.4</positionRadius>
+				<chancePerTick>0.02</chancePerTick>
+				<speed>.25</speed>
+				<angle>0</angle>
+				<scale>0.3~0.8</scale>
+				<avoidLastPositionRadius>0.3</avoidLastPositionRadius>
+				<fleckUsesAngleForVelocity>True</fleckUsesAngleForVelocity>
+				<spawnLocType>OnTarget</spawnLocType>
+			</li>
+		</children>
+	</EffecterDef>
+
+	<!-- since we're applying the effect at a different time, we need to reduce the rate otherwise it'll go wacky -->
+	<EffecterDef>
+		<defName>Clean_Inside</defName>
+		<children>
+			<li>
+				<subEffecterClass>SubEffecter_InteractSymbol</subEffecterClass>
+				<moteDef>Mote_Clean</moteDef>
+			</li>
+			<li>
+				<subEffecterClass>SubEffecter_SprayerContinuous</subEffecterClass>
+				<fleckDef>DustPuffThick</fleckDef>
+				<spawnLocType>RandomCellOnTarget</spawnLocType>
+				<ticksBetweenMotes>85</ticksBetweenMotes>
+				<scale>1.0~1.6</scale>
+				<angle>0~360</angle>
+				<rotationRate>-15~25</rotationRate>
+				<fleckUsesAngleForVelocity>true</fleckUsesAngleForVelocity>
+				<speed>0.1~0.3</speed>
+				<positionRadius>0.5</positionRadius>
+			</li>
+		</children>
+	</EffecterDef>
+</Defs>

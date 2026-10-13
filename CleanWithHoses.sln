@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanWithHoses", "CleanWithHoses.csproj", "{ADC3BBA7-61F6-449E-92BB-9C2939069649}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		1.4|Any CPU = 1.4|Any CPU
+		1.5|Any CPU = 1.5|Any CPU
+		1.6|Any CPU = 1.6|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADC3BBA7-61F6-449E-92BB-9C2939069649}.1.4|Any CPU.ActiveCfg = 1.4|Any CPU
+		{ADC3BBA7-61F6-449E-92BB-9C2939069649}.1.4|Any CPU.Build.0 = 1.4|Any CPU
+		{ADC3BBA7-61F6-449E-92BB-9C2939069649}.1.5|Any CPU.ActiveCfg = 1.5|Any CPU
+		{ADC3BBA7-61F6-449E-92BB-9C2939069649}.1.5|Any CPU.Build.0 = 1.5|Any CPU
+		{ADC3BBA7-61F6-449E-92BB-9C2939069649}.1.6|Any CPU.ActiveCfg = 1.6|Any CPU
+		{ADC3BBA7-61F6-449E-92BB-9C2939069649}.1.6|Any CPU.Build.0 = 1.6|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FE88107-27AB-44A3-934B-F7E9E94FB2FB}
+	EndGlobalSection
+EndGlobal
