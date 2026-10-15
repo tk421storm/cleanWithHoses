@@ -74,14 +74,6 @@ namespace TKS_CleanWithHoses
 						totalCleaningWorkDoneField.SetValue(__instance, 0f);
 						float totalCleaningWorkRequired = 0f;
 						totalCleaningWorkRequiredField.SetValue(__instance,  totalCleaningWorkRequired);
-						if (filth.GetRoom() != null && filth.GetRoom().OutdoorsForWork)
-						{
-							clean.WithEffect(TKS_Def.HoseCleaningEffect, TargetIndex.A, null);
-						}
-						else
-						{
-							clean.WithEffect(TKS_Def.Clean_Inside, TargetIndex.A, null);
-						}
 
 						//clean.WithProgressBar(TargetIndex.A, () => (float)totalCleaningWorkDoneField.GetValue(__instance) / (float)totalCleaningWorkRequiredField.GetValue(__instance), true, -0.5f, false);
 
@@ -135,6 +127,18 @@ namespace TKS_CleanWithHoses
 					clean.tickAction = outdoorCleanAction;
 					clean.defaultCompleteMode = ToilCompleteMode.Never;
 					//clean.WithEffect(EffecterDefOf.Clean, TargetIndex.A, null);
+
+					//one effect, chosen by the filth's room when it starts playing (it's cleaned up when the toil ends, so each filth
+					//in the queue gets its own). calling WithEffect in initAction added another effecter for every filth, and they piled up
+					clean.WithEffect(delegate ()
+					{
+						Filth filth = (Filth)filthProperty.GetValue(__instance);
+						if (filth != null && filth.GetRoom() != null && filth.GetRoom().OutdoorsForWork)
+						{
+							return TKS_Def.HoseCleaningEffect;
+						}
+						return TKS_Def.Clean_Inside;
+					}, TargetIndex.A);
 
 					clean.PlaySustainerOrSound(delegate ()
 					{
