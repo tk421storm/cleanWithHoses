@@ -170,5 +170,87 @@ namespace TKS_CleanWithHoses
             }
         }
     }
+
+	//Common Sense cleans filth before bills, meals and socialising with its own toil (Utility.CleanFilthToil) instead of the vanilla
+	//clean job, so the patch above never sees it. only patched when Common Sense is loaded, and only its 1.6 build has this method
+	//(1.5 builds the cleaning toil inline in each job, so it is not covered)
+	[HarmonyPatch]
+	public static class CommonSense_Patches
+	{
+		static bool Prepare()
+		{
+			return ModLister.GetActiveModWithIdentifier("avilmask.CommonSense", true) != null && TargetMethod() != null;
+		}
+
+		static MethodBase TargetMethod()
+		{
+			return AccessTools.Method("CommonSense.Utility:CleanFilthToil");
+		}
+
+		static bool IsOutdoors(Filth filth)
+		{
+			return filth.GetRoom() != null && filth.GetRoom().OutdoorsForWork;
+		}
+
+		//swap the cleaning effect for the hose when the filth is outdoors - indoors keeps the effect Common Sense asked for
+		static Toil WithCleaningEffect(Toil toil, EffecterDef effect, TargetIndex ind, Color? color)
+		{
+			return toil.WithEffect(delegate ()
+			{
+				Filth filth = toil.actor.jobs.curJob.GetTarget(ind).Thing as Filth;
+				if (filth != null && IsOutdoors(filth))
+				{
+					return TKS_Def.HoseCleaningEffect;
+				}
+				return effect;
+			}, ind, color);
+		}
+
+		//replace Common Sense's WithEffect call with ours (same arguments, so nothing else in the method changes)
+		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+		{
+			MethodInfo withEffect = AccessTools.Method(typeof(ToilEffects), nameof(ToilEffects.WithEffect), new Type[] { typeof(Toil), typeof(EffecterDef), typeof(TargetIndex), typeof(Color?) });
+			MethodInfo withCleaningEffect = AccessTools.Method(typeof(CommonSense_Patches), nameof(WithCleaningEffect));
+			bool replaced = false;
+
+			foreach (CodeInstruction instruction in instructions)
+			{
+				if (!replaced && instruction.Calls(withEffect))
+				{
+					instruction.operand = withCleaningEffect;
+					replaced = true;
+				}
+				yield return instruction;
+			}
+
+			if (!replaced)
+			{
+				Log.Warning("TKS_CleanWithHoses: couldn't find the cleaning effect in Common Sense's cleaning toil, it will keep its own effect");
+			}
+		}
+
+		//faster outdoors, same as the vanilla clean job above: run Common Sense's own cleaning step three times a tick
+		static void Postfix(Toil __result, TargetIndex Ind)
+		{
+			Toil toil = __result;
+			Action cleanTick = toil.tickAction;
+			if (cleanTick == null) { return; }
+
+			toil.tickAction = delegate ()
+			{
+				cleanTick();
+
+				//the step reads the filth's map, so stop as soon as it is cleaned away
+				Filth filth = toil.actor.jobs.curJob.GetTarget(Ind).Thing as Filth;
+				if (filth == null || filth.Destroyed || !IsOutdoors(filth)) { return; }
+
+				cleanTick();
+				if (!filth.Destroyed)
+				{
+					cleanTick();
+				}
+			};
+		}
+	}
 		
 }
