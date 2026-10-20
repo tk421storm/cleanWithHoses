@@ -23,7 +23,7 @@
 		</children>
 	</EffecterDef>
 
-	<!-- since we're applying the effect at a different time, we need to reduce the rate otherwise it'll go wacky -->
+	<!-- vanilla Clean under our own name, used by the clean job indoors (same mote rate as vanilla now that effects no longer pile up) -->
 	<EffecterDef>
 		<defName>Clean_Inside</defName>
 		<children>
@@ -35,7 +35,7 @@
 				<subEffecterClass>SubEffecter_SprayerContinuous</subEffecterClass>
 				<fleckDef>DustPuffThick</fleckDef>
 				<spawnLocType>RandomCellOnTarget</spawnLocType>
-				<ticksBetweenMotes>85</ticksBetweenMotes>
+				<ticksBetweenMotes>17</ticksBetweenMotes>
 				<scale>1.0~1.6</scale>
 				<angle>0~360</angle>
 				<rotationRate>-15~25</rotationRate>
