@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<FleckDef ParentName="FleckBase_RandomGraphic_Thrown">
+		<defName>Mote_HoseSplashes</defName>
+		<altitudeLayer>MoteLow</altitudeLayer>
+
+		<fadeInTime>0.0</fadeInTime>
+		<solidTime>0.05</solidTime>
+		<fadeOutTime>1</fadeOutTime>
+		<growthRate>0.6</growthRate>
+		<randomGraphics>
+			<li>
+				<graphicClass>Graphic_Fleck</graphicClass>
+				<texPath>TKS/Mote/splashA</texPath>
+				<shaderType>Transparent</shaderType>
+				<drawSize>0.55</drawSize>
+			</li>
+			<li>
+				<graphicClass>Graphic_Fleck</graphicClass>
+				<texPath>TKS/Mote/splashB</texPath>
+				<shaderType>Transparent</shaderType>
+				<drawSize>0.65</drawSize>
+			</li>
+			<li>
+				<graphicClass>Graphic_Fleck</graphicClass>
+				<texPath>TKS/Mote/splashC</texPath>
+				<shaderType>Transparent</shaderType>
+				<drawSize>0.75</drawSize>
+			</li>
+		</randomGraphics>
+	</FleckDef>
+</Defs>

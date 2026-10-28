@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_HoseClean</defName>
+		<thingClass>MoteDualAttached</thingClass>
+		<altitudeLayer>MetaOverlays</altitudeLayer>
+		<mote>
+			<solidTime>600</solidTime>
+		</mote>
+		<graphicData>
+			<texPath>TKS/Mote/HoseClean</texPath>
+		</graphicData>
+	</ThingDef>
+</Defs>
