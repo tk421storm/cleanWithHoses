@@ -238,11 +238,19 @@ namespace TKS_CleanWithHoses
 
 			toil.tickAction = delegate ()
 			{
+				//the step reads the filth's map, so it can't run once the filth is gone (cleaned on an earlier tick
+				//with time left on the toil, or by someone else) - finish the toil instead, as vanilla's cleaning does
+				Filth filth = toil.actor.jobs.curJob.GetTarget(Ind).Thing as Filth;
+				if (filth == null || !filth.Spawned)
+				{
+					toil.actor.jobs.curDriver.ReadyForNextToil();
+					return;
+				}
+
 				cleanTick();
 
-				//the step reads the filth's map, so stop as soon as it is cleaned away
-				Filth filth = toil.actor.jobs.curJob.GetTarget(Ind).Thing as Filth;
-				if (filth == null || filth.Destroyed || !IsOutdoors(filth)) { return; }
+				//stop as soon as it is cleaned away
+				if (filth.Destroyed || !IsOutdoors(filth)) { return; }
 
 				cleanTick();
 				if (!filth.Destroyed)
